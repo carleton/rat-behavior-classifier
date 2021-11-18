@@ -1,4 +1,4 @@
-#Weekly Updates
+# Weekly Updates
 
 ## October 11 - 17 2021
 - This week we set up DeepLabCut (Conda Environment), JAABA (MatLab) and our Repo onto the psychology lab computer.
