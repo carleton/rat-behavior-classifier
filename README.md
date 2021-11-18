@@ -15,8 +15,8 @@ This folder is a template for creating and running a MacOS DeepLabCut project. I
 5. train.pyw: Code to start the training process after the training and testing dataset is created.
 
 ## Todo:
-- Update the conversion code to include the new points labelled in DeepLabCut
-- Reorganize the GitHub Repo
+- Check against DLC csv output to ensure updated conversion code is correct
+- Rest of DLC automation after training
 - Look into why the video fps is low in JAABA
 
 ## Problems We've Encounter So Far: 

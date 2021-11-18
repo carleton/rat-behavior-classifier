@@ -39,12 +39,60 @@ def getTracks(track_list, offset):
         leftear_y = float(row[5 + offset]) if row[5 + offset] else None
         rightear_x = float(row[7 + offset]) if row[7 + offset] else None
         rightear_y = float(row[8 + offset]) if row[8 + offset] else None
-        tailbase_x = float(row[10 + offset]) if row[10 + offset] else None
-        tailbase_y = float(row[11 + offset]) if row[11 + offset] else None
+        cervical_x = float(row[10 + offset]) if row[10 + offset] else None
+        cervical_y = float(row[11 + offset]) if row[11 + offset] else None
+        shoulder_x = float(row[13 + offset]) if row[13 + offset] else None
+        shoulder_y = float(row[14 + offset]) if row[14 + offset] else None
+        thoracic_x = float(row[16 + offset]) if row[16 + offset] else None
+        thoracic_y = float(row[17 + offset]) if row[17 + offset] else None
+        hips_x = float(row[19 + offset]) if row[19 + offset] else None
+        hips_y = float(row[20 + offset]) if row[20 + offset] else None
+        lumbar_x = float(row[22 + offset]) if row[22 + offset] else None
+        lumbar_y = float(row[23 + offset]) if row[23 + offset] else None
+        tail_base_x = float(row[25 + offset]) if row[25 + offset] else None
+        tail_base_y = float(row[26 + offset]) if row[26 + offset] else None
+        tail_1_x = float(row[28 + offset]) if row[28 + offset] else None
+        tail_1_y = float(row[29 + offset]) if row[29 + offset] else None
+        tail_2_x = float(row[31 + offset]) if row[31 + offset] else None
+        tail_2_y = float(row[32 + offset]) if row[32 + offset] else None
+        tail_tip_x = float(row[34 + offset]) if row[34 + offset] else None
+        tail_tip_y = float(row[35 + offset]) if row[35 + offset] else None
 
+        x_elements = [
+            x_elem for x_elem in [
+                nose_x,
+                leftear_x,
+                rightear_x,
+                cervical_x,
+                shoulder_x,
+                thoracic_x,
+                hips_x,
+                lumbar_x,
+                tail_base_x
+            ] 
+        if x_elem is not None]
+        priority_tail = [tail_var for tail_var in [tail_1_x, tail_2_x, tail_tip_x] if tail_var is not None]
+        if len(priority_tail) > 0:
+            x_elements.append(priority_tail[0])
+        y_elements = [
+            y_elem for y_elem in [
+                nose_y,
+                leftear_y,
+                rightear_y,
+                cervical_y,
+                shoulder_y,
+                thoracic_y,
+                hips_y,
+                lumbar_y,
+                tail_base_y
+            ] 
+        if y_elem is not None]
+        priority_tail = [tail_var for tail_var in [tail_1_y, tail_2_y, tail_tip_y] if tail_var is not None]
+        if len(priority_tail) > 0:
+            y_elements.append(priority_tail[0])
         # these rows calculate the "center" from the coordinates that are visible in the frame and append it to the appropriate list
-        x_element = getCenter([nose_x, leftear_x, rightear_x, tailbase_x]) 
-        y_element = getCenter([nose_y, leftear_y, rightear_y, tailbase_y])
+        x_element = getCenter(x_elements) 
+        y_element = getCenter(y_elements)
         x.append(float(x_element))
         y.append(float(y_element))
 
@@ -57,8 +105,8 @@ def getTracks(track_list, offset):
             theta_list.append(float("nan"))
             
         # appends to a_list if necessary coordinates are found in the frame
-        if nose_x and nose_y and tailbase_x and tailbase_y:
-            a_list.append(float(lengthFinder(nose_x, nose_y, tailbase_x, tailbase_y) / 4)) 
+        if nose_x and nose_y and tail_base_x and tail_base_y:
+            a_list.append(float(lengthFinder(nose_x, nose_y, tail_base_x, tail_base_y) / 4)) 
         else:
             a_list.append(float("nan"))
 
