@@ -15,11 +15,11 @@ This folder is a template for creating and running a MacOS DeepLabCut project. I
 5. train.pyw: Code to start the training process after the training and testing dataset is created.
 
 ## Todo:
-- Check against DLC csv output to ensure updated conversion code is correct
-- Rest of DLC automation after training
+- Create files to automate process of analyze videos(AKA produce h5 file)
+- Update conversion code to read in h5 file.
 - Look into why the video fps is low in JAABA
 
-## Problems We've Encounter So Far: 
+## Problems We've Encountered So Far: 
 - The JAABA software is expecting numbers represented in a certain way using a specific amount of bytes and so all numbers must be of float type in python.
 - The dt property is an array of nframes-1 values where each value must be the same.
 - For multiple animals in the same video, nframes should be the same and so use the same start and endframe for each animal and use NaN if there is no value in that frame, NaN being represented as float('nan') in python.
