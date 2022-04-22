@@ -1,3 +1,4 @@
+from sys import exc_info
 from numpy.core.records import fromarrays
 from scipy.io import savemat, loadmat
 import csv
@@ -5,6 +6,7 @@ import numpy as np
 import cv2
 import math
 import os
+import pandas
 
 # Returns distance between a (x,y) coordinate pair
 def lengthFinder(x1,y1,x2,y2):
@@ -29,34 +31,33 @@ def getTracks(track_list, offset):
     b_list = [] # holds list of "b" coordinate values (a = 1/4 of minor axis length)
     theta_list = [] # holds list of theta values (currently just putting NaN if nothing is found within that frame, 0 otherwise.)
     
-    # start at 4 to skip headers in CSV
-    for row in track_list[4:]:
+    for row in track_list:
         # these rows get the appropriate data from the CSV. "offset" is used to get the appropriate data for the sex of the animal(in this case, 
         # it's 0 if male, 12 if female)
-        nose_x = float(row[1 + offset]) if row[1 + offset] else None
-        nose_y = float(row[2 + offset]) if row[2 + offset] else None
-        leftear_x = float(row[4 + offset]) if row[4 + offset] else None
-        leftear_y = float(row[5 + offset]) if row[5 + offset] else None
-        rightear_x = float(row[7 + offset]) if row[7 + offset] else None
-        rightear_y = float(row[8 + offset]) if row[8 + offset] else None
-        cervical_x = float(row[10 + offset]) if row[10 + offset] else None
-        cervical_y = float(row[11 + offset]) if row[11 + offset] else None
-        shoulder_x = float(row[13 + offset]) if row[13 + offset] else None
-        shoulder_y = float(row[14 + offset]) if row[14 + offset] else None
-        thoracic_x = float(row[16 + offset]) if row[16 + offset] else None
-        thoracic_y = float(row[17 + offset]) if row[17 + offset] else None
-        hips_x = float(row[19 + offset]) if row[19 + offset] else None
-        hips_y = float(row[20 + offset]) if row[20 + offset] else None
-        lumbar_x = float(row[22 + offset]) if row[22 + offset] else None
-        lumbar_y = float(row[23 + offset]) if row[23 + offset] else None
-        tail_base_x = float(row[25 + offset]) if row[25 + offset] else None
-        tail_base_y = float(row[26 + offset]) if row[26 + offset] else None
-        tail_1_x = float(row[28 + offset]) if row[28 + offset] else None
-        tail_1_y = float(row[29 + offset]) if row[29 + offset] else None
-        tail_2_x = float(row[31 + offset]) if row[31 + offset] else None
-        tail_2_y = float(row[32 + offset]) if row[32 + offset] else None
-        tail_tip_x = float(row[34 + offset]) if row[34 + offset] else None
-        tail_tip_y = float(row[35 + offset]) if row[35 + offset] else None
+        nose_x = float(row[0 + offset]) if not math.isnan(row[0 + offset]) else None
+        nose_y = float(row[1 + offset]) if not math.isnan(row[1 + offset]) else None
+        leftear_x = float(row[3 + offset]) if not math.isnan(row[3 + offset]) else None
+        leftear_y = float(row[4 + offset]) if not math.isnan(row[4 + offset]) else None
+        rightear_x = float(row[6 + offset]) if not math.isnan(row[6 + offset]) else None
+        rightear_y = float(row[7 + offset]) if not math.isnan(row[7 + offset]) else None
+        cervical_x = float(row[9 + offset]) if not math.isnan(row[9 + offset]) else None
+        cervical_y = float(row[10 + offset]) if not math.isnan(row[10 + offset]) else None
+        shoulder_x = float(row[12 + offset]) if not math.isnan(row[12 + offset]) else None
+        shoulder_y = float(row[13 + offset]) if not math.isnan(row[13 + offset]) else None
+        thoracic_x = float(row[15 + offset]) if not math.isnan(row[15 + offset]) else None
+        thoracic_y = float(row[16 + offset]) if not math.isnan(row[16 + offset]) else None
+        hips_x = float(row[18 + offset]) if not math.isnan(row[18 + offset]) else None
+        hips_y = float(row[19 + offset]) if not math.isnan(row[19 + offset]) else None
+        lumbar_x = float(row[21 + offset]) if not math.isnan(row[21 + offset]) else None
+        lumbar_y = float(row[22 + offset]) if not math.isnan(row[22 + offset]) else None
+        tail_base_x = float(row[24 + offset]) if not math.isnan(row[24 + offset]) else None
+        tail_base_y = float(row[25 + offset]) if not math.isnan(row[25 + offset]) else None
+        tail_1_x = float(row[27 + offset]) if not math.isnan(row[27 + offset]) else None
+        tail_1_y = float(row[28 + offset]) if not math.isnan(row[28 + offset]) else None
+        tail_2_x = float(row[30 + offset]) if not math.isnan(row[30 + offset]) else None
+        tail_2_y = float(row[31 + offset]) if not math.isnan(row[31 + offset]) else None
+        tail_tip_x = float(row[33 + offset]) if not math.isnan(row[33 + offset]) else None
+        tail_tip_y = float(row[34 + offset]) if not math.isnan(row[34 + offset]) else None
 
         x_elements = [
             x_elem for x_elem in [
@@ -119,18 +120,37 @@ def getTracks(track_list, offset):
     return x, y, a_list, b_list, theta_list
 
 def main(videoPath, csv_file_path):
+    print(os.getcwd())
     cap = cv2.VideoCapture(videoPath) # used to get fps of video
 
     fps = float(cap.get(cv2.CAP_PROP_FPS))
     dt = float(1 / fps) # time between frames, which is simply 1 / fps
 
     #read csv
-    with open(csv_file_path) as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
-        list_csv_reader = list(csv_reader)
+    # with open(csv_file_path) as csv_file:
+        # csv_reader = csv.reader(csv_file, delimiter=',')
+        # list_csv_reader = list(csv_reader)
 
-        male_x, male_y, male_a, male_b, male_theta = getTracks(list_csv_reader, 0) # gets male tracks
-        female_x, female_y, female_a, female_b, female_theta = getTracks(list_csv_reader, 12) # gets female tracks
+    h5: pandas.DataFrame = pandas.read_hdf(csv_file_path)
+    # print(h5.describe())
+    # print(h5.head(n = 10))
+    # for index, col in enumerate(h5.columns):
+    #     print(f'{index} : {col}')
+    # exit()
+    list_h5 = h5.to_numpy().tolist()
+    # total, count = 0, 0
+    # for i in lol:
+    #     if not math.isnan(i[0]):
+    #         total += i[0]
+    #         count += 1
+    # print("mean: ", total / count)
+
+    # #print(len(lol))
+    # exit()
+
+
+    male_x, male_y, male_a, male_b, male_theta = getTracks(list_h5, 0) # gets male tracks
+    female_x, female_y, female_a, female_b, female_theta = getTracks(list_h5, 36) # gets female tracks
 
     # check to make sure that all lists are equal length(which is necessary for JAABA)
     assert len(male_x) == len(male_y) == len(male_a) == len(male_b) == len(female_x) == len(female_y) == len(female_a) == len(female_b)
@@ -203,4 +223,4 @@ def main(videoPath, csv_file_path):
 
 if __name__ == "__main__":
     # replace below with the name of your video and name of the CSV tracks outputted by DeepLabCut
-    main("36 Optimus Progesterone Dose.mp4", "36 Optimus Progesterone DoseDLC_resnet50_RatLabTest3Aug2shuffle1_44500_el_filtered.csv")
+    main("14 Optimus Progesterone Dose.mp4", "14 Optimus Progesterone DoseDLC_dlcrnetms5_RatExperiment1Oct29shuffle1_200000_el.h5")
