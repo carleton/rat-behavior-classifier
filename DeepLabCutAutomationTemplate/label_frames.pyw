@@ -8,10 +8,11 @@
 # ask if you want to label another video. Repeat until you are done. You can always quit and run this function another 
 # time to continue where you left off as long as you have saved your work.
 
-import deeplabcut, os
-from dotenv import load_dotenv
+import deeplabcut
+from dotenv import load_dotenv, set_key, find_dotenv
 
-load_dotenv()
+dotenv_file = find_dotenv()
+load_dotenv(dotenv_file)
 
 CONFIG_PATH = None
 
@@ -24,4 +25,4 @@ deeplabcut.label_frames(CONFIG_PATH, multiple_individualsGUI=True)
 # If the labeling is done, sets an environmental variable to make it possible to continue with the next step
 # This will prevent running the next step accidentally before this step is done
 if (input("If you are done labeling EVERY frame for EVERY video, enter y to enable the next step.\n").casefold() == 'y'): 
-    os.environ['labeling_is_done'] = 'True'
+    set_key(dotenv_file, 'labeling_is_done', 'True')

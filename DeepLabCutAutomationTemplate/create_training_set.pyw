@@ -4,9 +4,10 @@
 #
 # Run this function to split up the labeled frames into a training and testing dataset
 import deeplabcut, os
-from dotenv import load_dotenv
+from dotenv import load_dotenv, set_key, find_dotenv
 
-load_dotenv()
+dotenv_file = find_dotenv()
+load_dotenv(dotenv_file)
 
 def main():
     CONFIG_PATH = None
@@ -19,8 +20,10 @@ def main():
     deeplabcut.create_multianimaltraining_dataset(CONFIG_PATH)
     # Sets an environmental variable to make it possible to continue with the next step
     # This will prevent running the next step accidentally before this step is done
-    os.environ['dataset_created'] = 'True'
+    set_key(dotenv_file, 'dataset_created', 'True')
 
 # Check that labeling is done to prevent accidentally this step early.
-if os.getenv('labeling_is_done'):
+if os.getenv('labeling_is_done') and not os.getenv('dataset_created'):
     main()
+else:
+    print("Labeling is not yet done!")
