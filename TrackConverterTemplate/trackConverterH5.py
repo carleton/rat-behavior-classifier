@@ -119,8 +119,7 @@ def getTracks(track_list, offset):
 
     return x, y, a_list, b_list, theta_list
 
-def main(videoPath, csv_file_path):
-    print(os.getcwd())
+def h5_to_mat(videoPath, h5_file_path, save_path):
     cap = cv2.VideoCapture(videoPath) # used to get fps of video
 
     fps = float(cap.get(cv2.CAP_PROP_FPS))
@@ -131,7 +130,7 @@ def main(videoPath, csv_file_path):
         # csv_reader = csv.reader(csv_file, delimiter=',')
         # list_csv_reader = list(csv_reader)
 
-    h5: pandas.DataFrame = pandas.read_hdf(csv_file_path)
+    h5: pandas.DataFrame = pandas.read_hdf(h5_file_path)
     # print(h5.describe())
     # print(h5.head(n = 10))
     # for index, col in enumerate(h5.columns):
@@ -212,15 +211,11 @@ def main(videoPath, csv_file_path):
     trx_array.append(male_trx_dict)
     trx_array.append(female_trx_dict)
 
-    mat_file = loadmat('template_trx.mat') # loads in template mat file
+    script_location = os.path.dirname(os.path.realpath(__file__))
+    mat_file = loadmat(os.path.join(script_location, 'template_trx.mat')) # loads in template mat file
 
     transposed = np.transpose([list(male_trx_dict.values()), list(female_trx_dict.values())]) # transpose to orient them correctly within MATLAB
     mat_file["trx"] = fromarrays(transposed, names = list(male_trx_dict.keys())) # replace the "trx" fields within this file
 
     # saves this .mat file locally with a new name
-    savemat(f'{os.path.basename(videoPath).split(".")[0].replace("(", "").replace(")", "").replace(" ", "")}Trx.mat', mat_file) 
-
-
-if __name__ == "__main__":
-    # replace below with the name of your video and name of the CSV tracks outputted by DeepLabCut
-    main("14 Optimus Progesterone Dose.mp4", "14 Optimus Progesterone DoseDLC_dlcrnetms5_RatExperiment1Oct29shuffle1_200000_el.h5")
+    savemat(os.path.join(save_path, 'p.mat'), mat_file)
