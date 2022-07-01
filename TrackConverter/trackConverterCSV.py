@@ -34,30 +34,30 @@ def getTracks(track_list, offset):
     for row in track_list:
         # these rows get the appropriate data from the CSV. "offset" is used to get the appropriate data for the sex of the animal(in this case, 
         # it's 0 if male, 12 if female)
-        nose_x = float(row[0 + offset]) if not math.isnan(row[0 + offset]) else None
-        nose_y = float(row[1 + offset]) if not math.isnan(row[1 + offset]) else None
+        nose_x = float(row[1 + offset]) if not math.isnan(row[1 + offset]) else None
+        nose_y = float(row[2 + offset]) if not math.isnan(row[2 + offset]) else None
         leftear_x = float(row[3 + offset]) if not math.isnan(row[3 + offset]) else None
         leftear_y = float(row[4 + offset]) if not math.isnan(row[4 + offset]) else None
-        rightear_x = float(row[6 + offset]) if not math.isnan(row[6 + offset]) else None
-        rightear_y = float(row[7 + offset]) if not math.isnan(row[7 + offset]) else None
-        cervical_x = float(row[9 + offset]) if not math.isnan(row[9 + offset]) else None
-        cervical_y = float(row[10 + offset]) if not math.isnan(row[10 + offset]) else None
-        shoulder_x = float(row[12 + offset]) if not math.isnan(row[12 + offset]) else None
-        shoulder_y = float(row[13 + offset]) if not math.isnan(row[13 + offset]) else None
-        thoracic_x = float(row[15 + offset]) if not math.isnan(row[15 + offset]) else None
-        thoracic_y = float(row[16 + offset]) if not math.isnan(row[16 + offset]) else None
-        hips_x = float(row[18 + offset]) if not math.isnan(row[18 + offset]) else None
-        hips_y = float(row[19 + offset]) if not math.isnan(row[19 + offset]) else None
-        lumbar_x = float(row[21 + offset]) if not math.isnan(row[21 + offset]) else None
-        lumbar_y = float(row[22 + offset]) if not math.isnan(row[22 + offset]) else None
-        tail_base_x = float(row[24 + offset]) if not math.isnan(row[24 + offset]) else None
-        tail_base_y = float(row[25 + offset]) if not math.isnan(row[25 + offset]) else None
-        tail_1_x = float(row[27 + offset]) if not math.isnan(row[27 + offset]) else None
-        tail_1_y = float(row[28 + offset]) if not math.isnan(row[28 + offset]) else None
-        tail_2_x = float(row[30 + offset]) if not math.isnan(row[30 + offset]) else None
-        tail_2_y = float(row[31 + offset]) if not math.isnan(row[31 + offset]) else None
-        tail_tip_x = float(row[33 + offset]) if not math.isnan(row[33 + offset]) else None
-        tail_tip_y = float(row[34 + offset]) if not math.isnan(row[34 + offset]) else None
+        rightear_x = float(row[5 + offset]) if not math.isnan(row[5 + offset]) else None
+        rightear_y = float(row[6 + offset]) if not math.isnan(row[6 + offset]) else None
+        cervical_x = float(row[7 + offset]) if not math.isnan(row[7 + offset]) else None
+        cervical_y = float(row[8 + offset]) if not math.isnan(row[8 + offset]) else None
+        shoulder_x = float(row[9 + offset]) if not math.isnan(row[9 + offset]) else None
+        shoulder_y = float(row[10 + offset]) if not math.isnan(row[10 + offset]) else None
+        thoracic_x = float(row[11 + offset]) if not math.isnan(row[11 + offset]) else None
+        thoracic_y = float(row[12 + offset]) if not math.isnan(row[12 + offset]) else None
+        hips_x = float(row[13 + offset]) if not math.isnan(row[13 + offset]) else None
+        hips_y = float(row[14 + offset]) if not math.isnan(row[14 + offset]) else None
+        lumbar_x = float(row[15 + offset]) if not math.isnan(row[15 + offset]) else None
+        lumbar_y = float(row[16 + offset]) if not math.isnan(row[16 + offset]) else None
+        tail_base_x = float(row[17 + offset]) if not math.isnan(row[17 + offset]) else None
+        tail_base_y = float(row[18 + offset]) if not math.isnan(row[18 + offset]) else None
+        tail_1_x = float(row[19 + offset]) if not math.isnan(row[19 + offset]) else None
+        tail_1_y = float(row[20 + offset]) if not math.isnan(row[20 + offset]) else None
+        tail_2_x = float(row[21 + offset]) if not math.isnan(row[21 + offset]) else None
+        tail_2_y = float(row[22 + offset]) if not math.isnan(row[22 + offset]) else None
+        tail_tip_x = float(row[23 + offset]) if not math.isnan(row[23 + offset]) else None
+        tail_tip_y = float(row[24 + offset]) if not math.isnan(row[24 + offset]) else None
 
         x_elements = [
             x_elem for x_elem in [
@@ -119,7 +119,7 @@ def getTracks(track_list, offset):
 
     return x, y, a_list, b_list, theta_list
 
-def h5_to_mat(videoPath, h5_file_path, save_path):
+def csv_to_mat(videoPath, csv_file_path, save_path):
     cap = cv2.VideoCapture(videoPath) # used to get fps of video
 
     fps = float(cap.get(cv2.CAP_PROP_FPS))
@@ -130,13 +130,13 @@ def h5_to_mat(videoPath, h5_file_path, save_path):
         # csv_reader = csv.reader(csv_file, delimiter=',')
         # list_csv_reader = list(csv_reader)
 
-    h5: pandas.DataFrame = pandas.read_hdf(h5_file_path)
+    data: pandas.DataFrame = pandas.read_csv(csv_file_path)
     # print(h5.describe())
     # print(h5.head(n = 10))
     # for index, col in enumerate(h5.columns):
     #     print(f'{index} : {col}')
     # exit()
-    list_h5 = h5.to_numpy().tolist()
+    list_data = data.to_numpy().tolist()
     # total, count = 0, 0
     # for i in lol:
     #     if not math.isnan(i[0]):
@@ -148,8 +148,8 @@ def h5_to_mat(videoPath, h5_file_path, save_path):
     # exit()
 
 
-    male_x, male_y, male_a, male_b, male_theta = getTracks(list_h5, 0) # gets male tracks
-    female_x, female_y, female_a, female_b, female_theta = getTracks(list_h5, 36) # gets female tracks
+    male_x, male_y, male_a, male_b, male_theta = getTracks(list_data, 0) # gets male tracks
+    female_x, female_y, female_a, female_b, female_theta = getTracks(list_data, 24) # gets female tracks
 
     # check to make sure that all lists are equal length(which is necessary for JAABA)
     assert len(male_x) == len(male_y) == len(male_a) == len(male_b) == len(female_x) == len(female_y) == len(female_a) == len(female_b)
@@ -218,4 +218,10 @@ def h5_to_mat(videoPath, h5_file_path, save_path):
     mat_file["trx"] = fromarrays(transposed, names = list(male_trx_dict.keys())) # replace the "trx" fields within this file
 
     # saves this .mat file locally with a new name
-    savemat(os.path.join(save_path, 'p.mat'), mat_file)
+    savemat(os.path.join(save_path, 'p.mat'), mat_file) 
+
+
+if __name__ == "__main__":
+    # replace below with the name of your video and name of the CSV tracks outputted by DeepLabCut
+    # h5_to_mat("14 Optimus Progesterone Dose.mp4", "14 Optimus Progesterone DoseDLC_dlcrnetms5_RatExperiment1Oct29shuffle1_200000_el.h5")
+    pass

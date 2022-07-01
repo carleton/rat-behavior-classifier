@@ -52,9 +52,9 @@ import os
 # Is used to name the DLC project: PROJECT_NAME-Your_Name-YYYY-MM-DD
 PROJECT_NAME = "RatExperiment1"
 YOUR_NAME = "Sarah Meerts"
-os.chdir("./Videos")
+video_path = os.path.abspath("../Videos")
 # Create an array of the absolute paths to all the videos in the Video folder.
-videoPathsArray = [os.path.abspath(video) for video in os.listdir() if video.endswith(".mp4")]
+videoPathsArray = [os.path.join(video_path, video) for video in os.listdir(video_path) if video.endswith(".mp4")]
 os.chdir("..")
 # Create a new DLC project.
 CONFIG_PATH = deeplabcut.create_new_project(PROJECT_NAME, YOUR_NAME, videoPathsArray, copy_videos=True, multianimal=True)

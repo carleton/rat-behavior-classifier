@@ -6,7 +6,8 @@
 # examples of multi animals in interacting
 # Note: You will have to quit and rerun for each seperate video you wish to extract frames from
 
-import deeplabcut
+import deeplabcut, os
+os.chdir("..")
 
 CONFIG_PATH = None
 

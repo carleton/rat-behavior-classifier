@@ -8,8 +8,9 @@
 # ask if you want to label another video. Repeat until you are done. You can always quit and run this function another 
 # time to continue where you left off as long as you have saved your work.
 
-import deeplabcut
+import deeplabcut, os
 from dotenv import load_dotenv, set_key, find_dotenv
+os.chdir("..")
 
 dotenv_file = find_dotenv()
 load_dotenv(dotenv_file)

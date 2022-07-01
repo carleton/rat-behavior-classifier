@@ -1,4 +1,9 @@
-# Weekly Updates
+# Updates
+
+## May 2022
+- Update dlc track converter to take in DLC .h5 files
+- Automate dlc creation of .h5 files
+- Automate creation of experiment directory for JAABA
 
 ## October 11 - 17 2021
 - This week we set up DeepLabCut (Conda Environment), JAABA (MatLab) and our Repo onto the psychology lab computer.
