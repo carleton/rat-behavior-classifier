@@ -1,4 +1,5 @@
 .env
-./DeepLabCutAutomationTemplate/Videos/*
+./Videos/*
+./JaabaScoreConversion/ScoreOutput/*
 .DS_Store
 __pycache__

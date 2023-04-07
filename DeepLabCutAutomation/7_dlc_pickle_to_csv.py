@@ -4,7 +4,8 @@ from dotenv import load_dotenv, find_dotenv, set_key
 from dataclasses import dataclass
 from typing import Tuple
 
-os.chdir("..")
+root = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
+os.chdir(root)
 
 dotenv_file = find_dotenv()
 load_dotenv(dotenv_file)

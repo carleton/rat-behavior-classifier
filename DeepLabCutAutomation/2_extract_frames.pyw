@@ -7,7 +7,9 @@
 # Note: You will have to quit and rerun for each seperate video you wish to extract frames from
 
 import deeplabcut, os
-os.chdir("..")
+
+root = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
+os.chdir(root)
 
 CONFIG_PATH = None
 

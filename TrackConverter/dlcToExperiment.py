@@ -1,6 +1,8 @@
 import os, shutil
 from trackConverterCSV import csv_to_mat
 
+## TODO Change from using first behavior to making a a generic ExperimentDirectory folder which can be copied from if needed
+
 FILE_NAME = 0
 MOVIE_PATH = 0
 CSV_PATH = 1

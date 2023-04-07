@@ -5,7 +5,9 @@
 # Run this function to split up the labeled frames into a training and testing dataset
 import deeplabcut, os
 from dotenv import load_dotenv, set_key, find_dotenv
-os.chdir("..")
+
+root = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
+os.chdir(root)
 
 dotenv_file = find_dotenv()
 load_dotenv(dotenv_file)

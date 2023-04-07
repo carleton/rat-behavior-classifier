@@ -5,7 +5,9 @@
 # Run this function to begin the training on the dataset
 import deeplabcut, os
 from dotenv import load_dotenv, find_dotenv, set_key
-os.chdir("..")
+
+root = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
+os.chdir(root)
 
 dotenv_file = find_dotenv()
 load_dotenv(dotenv_file)
