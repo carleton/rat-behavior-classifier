@@ -1,0 +1,3 @@
+[submodule "DeepLabCut"]
+	path = DeepLabCut
+	url = https://github.com/AlexEMG/DeepLabCut.git
