@@ -54,13 +54,14 @@ os.chdir(root)
 
 # Is used to name the DLC project: PROJECT_NAME-Your_Name-YYYY-MM-DD
 PROJECT_NAME = "RatExperiment1"
-YOUR_NAME = "Sarah Meerts"
+EXPERIMENTER = "Sarah Meerts"
+
 os.chdir("Videos")
 # Create an array of the absolute paths to all the videos in the Video folder.
 videoPathsArray = [os.path.abspath(video) for video in os.listdir() if video.endswith(".mp4")]
 os.chdir("..")
 # Create a new DLC project.
-CONFIG_PATH = deeplabcut.create_new_project(PROJECT_NAME, YOUR_NAME, videoPathsArray, copy_videos=True, multianimal=True)
+CONFIG_PATH = deeplabcut.create_new_project(PROJECT_NAME, EXPERIMENTER, videoPathsArray, copy_videos=True, multianimal=True)
 # Save config file path for future use
 with open('CONFIG_PATH.txt', 'w') as config_path_file:
     config_path_file.write(CONFIG_PATH)
