@@ -3,14 +3,13 @@ from trackConverterCSV import csv_to_mat
 
 ## TODO Change from using first behavior to making a a generic ExperimentDirectory folder which can be copied from if needed
 
+behaviors = ["Mount", "Intros", "Ejac"] # SPECIFY DESIRED BEHAVIORS HERE
+
 FILE_NAME = 0
 MOVIE_PATH = 0
 CSV_PATH = 1
 
 script_location = os.path.dirname(os.path.realpath(__file__))
-
-behaviors = ["Mount", "Intros", "Ejac"]
-
 
 project_dir_path = os.path.join(script_location, behaviors[0])
 

@@ -4,6 +4,7 @@ from dotenv import load_dotenv, find_dotenv, set_key
 from dataclasses import dataclass
 from typing import Tuple
 
+# Run this function to convert the generated h5 files to csv's so we can work with them
 root = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
 os.chdir(root)
 

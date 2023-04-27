@@ -2,7 +2,7 @@
 # based off of: 
 # https://github.com/DeepLabCut/DeepLabCut/blob/master/docs/maDLC_UserGuide.md#optimized-animal-assembly--video-analysis
 #
-# Run this function to begin the training on the dataset
+# Run this function to create videos showing detections. This is not required, just a diagnostic step.
 import deeplabcut, os
 from dotenv import load_dotenv, set_key, find_dotenv
 

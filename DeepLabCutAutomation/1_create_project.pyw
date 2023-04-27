@@ -103,6 +103,6 @@ deeplabcut.auxiliaryfunctions.edit_config(CONFIG_PATH, edits)
 # Extracts frames from all the videos in the config file.
 # You can add more videos at any point with the add_new_video function.
 # Extracts frames defaults to kmeans in order to select visually different frames.
-# WARNING: Kmens is currently not working so we are using uniform to get the base frames.
+# WARNING: Kmeans is currently not working so we are using uniform to get the base frames.
 # Userfeedback is set to false so that the extraction is automatic for all videos.
 deeplabcut.extract_frames(CONFIG_PATH, algo="uniform", userfeedback=False)

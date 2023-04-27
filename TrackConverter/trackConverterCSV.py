@@ -125,28 +125,9 @@ def csv_to_mat(videoPath, csv_file_path, save_path):
     fps = float(cap.get(cv2.CAP_PROP_FPS))
     dt = float(1 / fps) # time between frames, which is simply 1 / fps
 
-    #read csv
-    # with open(csv_file_path) as csv_file:
-        # csv_reader = csv.reader(csv_file, delimiter=',')
-        # list_csv_reader = list(csv_reader)
-
     data: pandas.DataFrame = pandas.read_csv(csv_file_path)
-    # print(h5.describe())
-    # print(h5.head(n = 10))
-    # for index, col in enumerate(h5.columns):
-    #     print(f'{index} : {col}')
-    # exit()
+
     list_data = data.to_numpy().tolist()
-    # total, count = 0, 0
-    # for i in lol:
-    #     if not math.isnan(i[0]):
-    #         total += i[0]
-    #         count += 1
-    # print("mean: ", total / count)
-
-    # #print(len(lol))
-    # exit()
-
 
     male_x, male_y, male_a, male_b, male_theta = getTracks(list_data, 0) # gets male tracks
     female_x, female_y, female_a, female_b, female_theta = getTracks(list_data, 24) # gets female tracks
@@ -220,8 +201,7 @@ def csv_to_mat(videoPath, csv_file_path, save_path):
     # saves this .mat file locally with a new name
     savemat(os.path.join(save_path, 'p.mat'), mat_file) 
 
-
 if __name__ == "__main__":
     # replace below with the name of your video and name of the CSV tracks outputted by DeepLabCut
-    # h5_to_mat("14 Optimus Progesterone Dose.mp4", "14 Optimus Progesterone DoseDLC_dlcrnetms5_RatExperiment1Oct29shuffle1_200000_el.h5")
+    csv_to_mat("14 Optimus Progesterone Dose.mp4", "14 Optimus Progesterone DoseDLC_dlcrnetms5_RatExperiment1Oct29shuffle1_200000_el.h5")
     pass

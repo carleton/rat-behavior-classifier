@@ -5,6 +5,7 @@ def select_rat():
     #TODO Give rat selection prompt
     return 1
 
+# this is a template code for extracting information from the JAABA prediction output 
 def get_count(scores):
     num_bouts = 0 # number of times that behavior is identified in the frames
 

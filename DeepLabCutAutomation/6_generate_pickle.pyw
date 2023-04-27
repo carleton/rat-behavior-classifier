@@ -2,7 +2,7 @@
 # based off of: 
 # https://github.com/DeepLabCut/DeepLabCut/blob/master/docs/maDLC_UserGuide.md#optimized-animal-assembly--video-analysis
 #
-# Run this function to begin the training on the dataset
+# After training has finished, run this function to generate the h5 file containing predictions
 import deeplabcut, os
 from dotenv import load_dotenv, find_dotenv, set_key
 
