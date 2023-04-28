@@ -3,13 +3,31 @@
 ## Introduction
 This is project is trying to use DeepLabCut and JAABA to classify animal behavior. The idea is that we use DeepLabCut as a non-invasive multi-part tracker to get the tracks of the animals and then we feed those tracks into JAABA to train behavior classifiers that will then be able to predict bouts of animal behavior on new videos.
 
-## Getting Started
+## Getting Ready
 We recommend installing [VS Code](https://code.visualstudio.com/download) and [git](https://git-scm.com/download) in order to clone the code and run it locally.
 
-## TrackConverterTemplate
+You will need [Anaconda](https://www.anaconda.com/download/) to run DeepLabCut
+
+With the code downloaded and Anaconda installed, you will then have to open up the terminal and navigate to [DeepLabCut/conda-environments](./DeepLabCut/conda-environments) folder. If you open this project in VS Code and open a terminal you simply need to run the following commands.
+
+```console
+git submodule update --init             # download the DeepLabCut code
+cd DeepLabCut/conda-environments        # navigate to the correct folder
+conda env create -f DEEPLABCUT.yaml     # install the DeepLabCut Anaconda environment (dependencies)
+```
+
+In the [rat-behavior-classifier folder](.), you must create a folder named Videos within which you place the video (.mp4) of each experiment you will be using to train the model.
+
+Before you begin you will need to open [DeepLabCutAutomation/1_create_project.pyw](./DeepLabCutAutomation/1_create_project.pyw) an adjust the ```PROJECT_NAME```, ```YOUR_NAME``` and ```edits``` to your specific project requirements.
+
+## Running the Code
+
+
+## Code Breakdown
+### TrackConverterTemplate
 The trackConverter is the code that we are using to convert the output from DeepLabCut (csv) into a valid input (trx files) for JAABA.
 
-## DeepLabCutAutomationTemplate
+### DeepLabCutAutomationTemplate
 This folder is a template for creating and running a MacOS DeepLabCut project. It contains:
 1. create_project.pyw: Code to create a new project, customize the config file and extract some preliminary frames for labeling
 2. extract_frames.pyw: Code to launch DLC's GUI for manualy extracting specified frames for labeling

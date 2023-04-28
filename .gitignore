@@ -1,5 +1,9 @@
-.env
-./Videos/*
-./JaabaScoreConversion/ScoreOutput/*
-.DS_Store
-__pycache__
+*
+!.gitignore
+!.gitmodules
+!DeepLabCutAutomation/*
+!JaabaScoreConversion/*
+!TackConverter/*
+!LICENSE
+!README.md
+!WeeklyUpdate.md

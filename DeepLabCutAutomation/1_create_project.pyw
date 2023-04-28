@@ -1,4 +1,3 @@
-#!/Users/psycstudent/opt/anaconda3/envs/DEEPLABCUT/bin/ pythonw
 # based off of: 
 # https://github.com/DeepLabCut/DeepLabCut/blob/master/docs/maDLC_UserGuide.md#optimized-animal-assembly--video-analysis
 # We are assuming that the code will be run in an experimentl directory of the following structure
@@ -55,6 +54,9 @@ os.chdir(root)
 # Is used to name the DLC project: PROJECT_NAME-Your_Name-YYYY-MM-DD
 PROJECT_NAME = "RatExperiment1"
 YOUR_NAME = "Sarah Meerts"
+if not os.path.isdir("Videos"):
+    print("Please create a folder 'Videos' with the videos for training.")
+    exit()
 os.chdir("Videos")
 # Create an array of the absolute paths to all the videos in the Video folder.
 videoPathsArray = [os.path.abspath(video) for video in os.listdir() if video.endswith(".mp4")]
