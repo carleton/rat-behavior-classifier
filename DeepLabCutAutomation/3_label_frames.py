@@ -1,4 +1,3 @@
-#!/Users/psycstudent/opt/anaconda3/envs/DEEPLABCUT/bin/ pythonw
 # based off of: 
 # https://github.com/DeepLabCut/DeepLabCut/blob/master/docs/maDLC_UserGuide.md#optimized-animal-assembly--video-analysis
 #
@@ -14,6 +13,9 @@ from dotenv import load_dotenv, set_key, find_dotenv
 root = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
 os.chdir(root)
 
+with open(".env", "w"):
+    pass
+
 dotenv_file = find_dotenv()
 load_dotenv(dotenv_file)
 
@@ -24,7 +26,7 @@ with open('CONFIG_PATH.txt', 'r') as config_path_file:
     CONFIG_PATH = config_path_file.read()
 
 # Launch GUI to label frames for a multiple animal project
-deeplabcut.label_frames(CONFIG_PATH, multiple_individualsGUI=True)
+deeplabcut.label_frames(CONFIG_PATH)
 # If the labeling is done, sets an environmental variable to make it possible to continue with the next step
 # This will prevent running the next step accidentally before this step is done
 if (input("If you are done labeling EVERY frame for EVERY video, enter y to enable the next step.\n").casefold() == 'y'): 

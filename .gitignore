@@ -1,8 +1,11 @@
 *
 !.gitignore
 !.gitmodules
+!DeepLabCutAutomation/
 !DeepLabCutAutomation/*
+!JaabaScoreConversion/
 !JaabaScoreConversion/*
+!TackConverter/
 !TackConverter/*
 !LICENSE
 !README.md

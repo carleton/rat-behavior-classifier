@@ -10,10 +10,19 @@ You will need [Anaconda](https://www.anaconda.com/download/) to run DeepLabCut
 
 With the code downloaded and Anaconda installed, you will then have to open up the terminal and navigate to [DeepLabCut/conda-environments](./DeepLabCut/conda-environments) folder. If you open this project in VS Code and open a terminal you simply need to run the following commands.
 
-```console
+
+<!--
+Is not working at the moment
 git submodule update --init             # download the DeepLabCut code
 cd DeepLabCut/conda-environments        # navigate to the correct folder
 conda env create -f DEEPLABCUT.yaml     # install the DeepLabCut Anaconda environment (dependencies)
+-->
+```console
+conda create -n DEEPLABCUT python=3.10
+conda activate DEEPLABCUT
+conda install -y -q python-dotenv
+pip install "deeplabcut[tf,gui]"
+conda deactivate
 ```
 
 In the [rat-behavior-classifier folder](.), you must create a folder named Videos within which you place the video (.mp4) of each experiment you will be using to train the model.
