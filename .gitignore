@@ -5,8 +5,8 @@
 !DeepLabCutAutomation/*
 !JaabaScoreConversion/
 !JaabaScoreConversion/*
-!TackConverter/
-!TackConverter/*
+!TrackConverter/
+!TrackConverter/*
 !LICENSE
 !README.md
 !WeeklyUpdate.md

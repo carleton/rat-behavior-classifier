@@ -1,7 +1,7 @@
 # MeertsLabMachineLearning
 
 ## Introduction
-This is project is trying to use DeepLabCut and JAABA to classify animal behavior. The idea is that we use DeepLabCut as a non-invasive multi-part tracker to get the tracks of the animals and then we feed those tracks into JAABA to train behavior classifiers that will then be able to predict bouts of animal behavior on new videos.
+This is a project is that uses DeepLabCut and JAABA to classify animal behavior. The idea is that we use DeepLabCut as a non-invasive multi-part tracker to get the tracks of the animals and then we feed those tracks into JAABA to train behavior classifiers that will then be able to predict bouts of animal behavior on new videos.
 
 ## Getting Ready
 We recommend installing [VS Code](https://code.visualstudio.com/download) and [git](https://git-scm.com/download) in order to clone the code and run it locally.
@@ -29,20 +29,33 @@ In the [rat-behavior-classifier folder](.), you must create a folder named Video
 
 Before you begin you will need to open [DeepLabCutAutomation/1_create_project.pyw](./DeepLabCutAutomation/1_create_project.pyw) an adjust the ```PROJECT_NAME```, ```YOUR_NAME``` and ```edits``` to your specific project requirements.
 
-## Running the Code
+## DeepLabCut:
 
+DeepLabCut is a library that allows one to train deep neural networks to track the body parts of one or more animals by labeling a small number of frames. Read more about it here: http://www.mackenziemathislab.org/deeplabcut#:~:text=DeepLabCut%E2%84%A2%20is%20an%20efficient,typically%2050%2D200%20frames).
 
+Read our DeepLabCut.md file for more details.
+## JAABA
+
+- JAABA is a library that allows one to train animal behavior classifiers by giving it tracks of animal body parts(obtained through DeepLabCut in our case) and labeling a small number of the behavior occurring within a video. The official description is below:
+
+    "JAABA is a machine learning-based system that enables researchers to automatically compute interpretable, quantitative statistics describing video of behaving animals. Through our system, users encode their intuition about the structure of behavior by labeling the behavior of the animal, e.g. walking, grooming, or following, in a small set of video frames. JAABA uses machine learning techniques to convert these manual labels into behavior detectors that can then be used to automatically classify the behaviors of animals in large data sets."
+
+- Here are some Google docs that we have written with more information: 
+    - JAABA 101: https://docs.google.com/document/d/1cxoGsuiK8lHuTF_r5S5VBk25jN60DtfTjL3PkBHwSaY/edit?usp=sharing
+    - JAABA Setup Instructions: https://docs.google.com/document/d/1_g4UfvuIWSUyzl0OqNBMMNuLLh-bWL2n7NGrzNyp3r0/edit
 ## Code Breakdown
-### TrackConverterTemplate
-The trackConverter is the code that we are using to convert the output from DeepLabCut (csv) into a valid input (trx files) for JAABA.
 
-### DeepLabCutAutomationTemplate
-This folder is a template for creating and running a MacOS DeepLabCut project. It contains:
-1. create_project.pyw: Code to create a new project, customize the config file and extract some preliminary frames for labeling
-2. extract_frames.pyw: Code to launch DLC's GUI for manualy extracting specified frames for labeling
-3. label_frames.pyw: Code to launch DLC's GUI for labeling extracted frames
-4. create_training_set.py: Code to convert all frames into a training and testing dataset. This should be only run after labeling all frames as it will treat unlabeled frames as having no target in them, but still include them in the dataset.
-5. train.pyw: Code to start the training process after the training and testing dataset is created.
+- ### DeepLabCutAutomationTemplate
+    - We have created 7 Python files, that when run in order, automates the DeepLabCut component of this project. They are found in the DeepLabCutAutomation folder. The files that don't start with a number are optional and are used for diagnostic purposes.
+
+- ### JaabaScoreConversion
+    - get_jaaba_predictions.py: this is a file where you can specify a JAABA experiment directory, and after running, will automatically get the predictions for behaviors specified in jab_list.txt on all the videos in the experiment directory.
+    - jab_list.txt: as mentioned above, this is a file where you list the classifiers for behaviors that you want to apply to a given experiment directory.
+    - score_converter.py. This is template code for extracting information from the output from JAABA. Read more about this file in the "Next Steps" section below.
+- ### TrackConverter
+    - dlcToExperiment.py: This is a file you use when you want to create a new JAABA experiment. You can specify the list of behaviors that you want to train classifiers for; running this file will automatically copy over the videos and .csv tracks from the DeepLabCut folder, create several copies of these videos and tracks(one for each behavior), and also populate each of those behavior folders with the CONVERTED tracks as well(tracks from DeepLabCut converted into JAABA compatible format using trackConverterCSV.py).
+    - template_trx.mat: This is a file that we use during the track conversion process. Not super clear on what it contains, all we know is that it was used in the code that was given to us to convert the tracks so we're keeping it.
+    - trackConverterCSV.py: This is the file that contains the function(csv_to_mat()) that actually converts DeepLabCut tracks to JAABA.
 
 ## Problems We've Encountered So Far: 
 - In the process of converting DeepLabCut tracks into a .mat file in JAABA:

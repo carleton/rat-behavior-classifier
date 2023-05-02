@@ -209,5 +209,5 @@ def csv_to_mat(videoPath, csv_file_path, save_path):
 
 if __name__ == "__main__":
     # replace below with the name of your video and name of the CSV tracks outputted by DeepLabCut
-    csv_to_mat("14 Optimus Progesterone Dose.mp4", "14 Optimus Progesterone DoseDLC_dlcrnetms5_RatExperiment1Oct29shuffle1_200000_el.h5")
+    # csv_to_mat("14 Optimus Progesterone Dose.mp4", "14 Optimus Progesterone DoseDLC_dlcrnetms5_RatExperiment1Oct29shuffle1_200000_el.h5")
     pass
