@@ -35,9 +35,9 @@ for key, value in name_to_path.items():
     assert(movie_path.endswith(".mp4"))
     os.mkdir(experiment_dir_path)
     shutil.copyfile(movie_path, os.path.join(experiment_dir_path, "movie.mp4"))
-    print(movie_path)
-    print(value[CSV_PATH])
-    print(experiment_dir_path)
+    # print(movie_path)
+    # print(value[CSV_PATH])
+    # print(experiment_dir_path)
     csv_to_mat(movie_path, value[CSV_PATH], experiment_dir_path)
 
 for behavior in behaviors[1:]:

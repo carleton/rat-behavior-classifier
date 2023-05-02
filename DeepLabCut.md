@@ -1,4 +1,5 @@
-# DeepLabCut - Setup Instructions
+# DeepLabCut
+## Setup Instructions
 
 1. ### Download and Install Anaconda
     * Go to this link: https://www.anaconda.com/distribution/ 
