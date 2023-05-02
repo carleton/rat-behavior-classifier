@@ -1,18 +1,18 @@
 import os
 from scipy.io import savemat, loadmat
 
+# For each video, the person using this must specify which is the female rat.
+# This is done by opening JAABA, open the classifier(In.jab, for example), switch to the desired video.
 def select_rat():
-    #TODO Give rat selection prompt
-    return 1
+    selection = input("Which rat is the female rat? 1 or 2?")
+    return selection - 1 # we return selection - 1 because in the output scores, they use 0-indexing.
 
-# this is a template code for extracting information from the JAABA prediction output 
-def get_count(scores):
+def get_results(scores):
     num_bouts = 0 # number of times that behavior is identified in the frames
+    frame_list = [] # records the frames where the start of bouts occur
 
-    # TODO determine these variables
-    # predetermined variables
+    # TODO determine these variables by manually examining the characteristics of "real" bouts of behavior in the video
     min_bout_length = 5 # bout must exceed this number of frames
-    max_bout_length = 30 # bout must be less than this number of frames
     max_none_frames = 5 # bout cannot exceed this number of none frames in a arow
 
     # variables to track a bout
@@ -39,10 +39,12 @@ def get_count(scores):
                 # If it exceeds a threshold, consider it as the end of the bout.
                 if num_none_frames >= max_none_frames:
                     tracking_bout = False 
-                    # if the bout is within the acceptable range of behavior length, increment the number of bouts
-                    if min_bout_length < cur_bout_length < max_bout_length:
+                    # if the bout is within the acceptable range of behavior length, increment the number of bouts and record frame
+                    if min_bout_length < cur_bout_length:
                         num_bouts += 1
+                        frame_list.append(frame)
     print(num_bouts)
+    print(frame_list)
 
 def chambermate_format():
     #TODO reformat data to match chambermate data and output it 
@@ -51,11 +53,7 @@ def chambermate_format():
 def main():
     raw_scores = loadmat(os.path.join('/Users/neurostudent/Downloads/', 'test.mat'))
     raw_scores = list(raw_scores['allScores']['postprocessed'][0][0][0][select_rat()][0])
-    print(type(raw_scores))
-    # print(len(raw_scores[0]))
-    # for index, row in enumerate(raw_scores):
-    #     print(index, row)
-    clean_scores = get_count(raw_scores)
+    clean_scores = get_results(raw_scores)
     # chambermate_format(clean_scores)
 
 if __name__ == "__main__":

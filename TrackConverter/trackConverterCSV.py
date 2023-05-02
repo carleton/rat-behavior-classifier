@@ -20,7 +20,6 @@ def getCenter(positions):
         total += position
     if count == 0:
         return float('nan')
-
     return total / count
 
 # returns properly formatted tracks for a given animal
@@ -31,8 +30,9 @@ def getTracks(track_list, offset):
     b_list = [] # holds list of "b" coordinate values (a = 1/4 of minor axis length)
     theta_list = [] # holds list of theta values (currently just putting NaN if nothing is found within that frame, 0 otherwise.)
     
+    # this loop iterates n times, where n = number of frames in the video
     for row in track_list:
-        # these rows get the appropriate data from the CSV. "offset" is used to get the appropriate data for the sex of the animal(in this case, 
+        # these variables get the data from the CSV and name them. "offset" is used to get the appropriate data for the sex of the animal(in this case, 
         # it's 0 if male, 12 if female)
         nose_x = float(row[1 + offset]) if not math.isnan(row[1 + offset]) else None
         nose_y = float(row[2 + offset]) if not math.isnan(row[2 + offset]) else None
@@ -59,6 +59,7 @@ def getTracks(track_list, offset):
         tail_tip_x = float(row[23 + offset]) if not math.isnan(row[23 + offset]) else None
         tail_tip_y = float(row[24 + offset]) if not math.isnan(row[24 + offset]) else None
 
+        # gets a list of all the x-coordinates for this frame that are not NaN
         x_elements = [
             x_elem for x_elem in [
                 nose_x,
@@ -70,11 +71,14 @@ def getTracks(track_list, offset):
                 hips_x,
                 lumbar_x,
                 tail_base_x
-            ] 
-        if x_elem is not None]
+            ] if x_elem is not None]
+
+        # gets the x-coordinate of the tail part closest to the rat's body and appends it to the previous list
         priority_tail = [tail_var for tail_var in [tail_1_x, tail_2_x, tail_tip_x] if tail_var is not None]
         if len(priority_tail) > 0:
             x_elements.append(priority_tail[0])
+
+        # gets a list of all the y-coordinates for this frame that are not NaN
         y_elements = [
             y_elem for y_elem in [
                 nose_y,
@@ -86,11 +90,13 @@ def getTracks(track_list, offset):
                 hips_y,
                 lumbar_y,
                 tail_base_y
-            ] 
-        if y_elem is not None]
+            ] if y_elem is not None]
+
+        # gets the y-coordinate of the tail part closest to the rat's body and appends it to the previous list
         priority_tail = [tail_var for tail_var in [tail_1_y, tail_2_y, tail_tip_y] if tail_var is not None]
         if len(priority_tail) > 0:
             y_elements.append(priority_tail[0])
+
         # these rows calculate the "center" from the coordinates that are visible in the frame and append it to the appropriate list
         x_element = getCenter(x_elements) 
         y_element = getCenter(y_elements)
@@ -105,13 +111,13 @@ def getTracks(track_list, offset):
         else:
             theta_list.append(float("nan"))
             
-        # appends to a_list if necessary coordinates are found in the frame
+        # appends to a_list if the necessary coordinates are found in the frame
         if nose_x and nose_y and tail_base_x and tail_base_y:
             a_list.append(float(lengthFinder(nose_x, nose_y, tail_base_x, tail_base_y) / 4)) 
         else:
             a_list.append(float("nan"))
 
-        # appends to b_list if necessary coordinates are found in the frame
+        # appends to b_list if the necessary coordinates are found in the frame
         if leftear_x and leftear_y and rightear_x and rightear_y:
             b_list.append(float(lengthFinder(leftear_x, leftear_y, rightear_x, rightear_y) / 4)) 
         else:
