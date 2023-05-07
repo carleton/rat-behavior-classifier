@@ -5,15 +5,14 @@ from scipy.io import savemat, loadmat
 # This is done by opening JAABA, open the classifier(In.jab, for example), switch to the desired video.
 def select_rat():
     selection = input("Which rat is the female rat? 1 or 2?")
-    return selection - 1 # we return selection - 1 because in the output scores, they use 0-indexing.
+    return selection-1 # we return selection - 1 because in the output scores, they use 0-indexing.
 
 def get_results(scores):
     num_bouts = 0 # number of times that behavior is identified in the frames
     frame_list = [] # records the frames where the start of bouts occur
 
-    # TODO determine these variables by manually examining the characteristics of "real" bouts of behavior in the video
+    # TODO determine this variable by manually examining the characteristics of "real" bouts of behavior in the video
     min_bout_length = 5 # bout must exceed this number of frames
-    max_none_frames = 5 # bout cannot exceed this number of none frames in a arow
 
     # variables to track a bout
     cur_bout_length = 0 # number of frames comprising the current bout of behavior
