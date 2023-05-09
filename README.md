@@ -68,11 +68,24 @@ Read our DeepLabCut.md file for more details.
     - template_trx.mat: This is a file that we use during the track conversion process. Not super clear on what it contains, all we know is that it was used in the code that was given to us to convert the tracks so we're keeping it.
     - trackConverterCSV.py: This is the file that contains the function(csv_to_mat()) that actually converts DeepLabCut tracks to JAABA.
 
-## Problems We've Encountered So Far: 
+## Workflow:
+This is an outline of the workflow of this project, and it's assuming that you're starting from complete scratch. Note that if you are not starting from scratch, this is just a general order of things must be done, so you don't need to repeat every step of the process everytime you want to get prediction for JAABA, for example.
+
+1. DeepLabCut
+    1. Use [DeepLabCutAutomation/1_create_project.py](./DeepLabCutAutomation/1_create_project.py)  to create a new DLC project. 
+    2. Use [DeepLabCutAutomation/launch_deeplab_cut.sh](./DeepLabCutAutomation/launch_deeplab_cut.sh) to launch the GUI to complete the rest of the process(extracting frames, labeling frames, creating training set, training, generating pickles, converting from pickle to CSV)
+2. JAABA
+    1. Use [TrackConverter/dlcToExperiment.py](./TrackConverter/dlcToExperiment.py)  when you want to create a new JAABA experiment.
+        - Note that this is where our [TrackConverter/trackConverterCSV.py](./TrackConverter/trackConverterCSV.py) file is used.
+    2. Train classifier(s). 
+    3. Specify behaviors you want to get predictions for in [JaabaScoreConversion/jab_list.txt](./JaabaScoreConversion/jab_list.txt)
+    4. Use [JaabaScoreConversion/get_jaaba_predictions.py](./JaabaScoreConversion/get_jaaba_predictions.py) to get the predictions for behaviors specified in jab_list.txt on all the videos in the experiment directory.
+    5. (future) use [JaabaScoreConversion/score_converter.py](./JaabaScoreConversion/score_converter.py) to convert the JAABA predictions into a format Sarah wants(AKA the way ChamberMate produces results)
+## Problems We've Encountered(and figured out): 
 - In the process of converting DeepLabCut tracks into a .mat file in JAABA:
-    - The dt property is an array of nframes-1 values where each value must be the same.
+    - The dt property has to be an array of nframes-1 values where each value must be the same.
     - For multiple animals in the same video, nframes should be the same and so use the same start and endframe for each animal and use NaN if there is no value in that frame, NaN being represented as float('nan') in python.
-- [click here for the JAABA Google Groups conversation where we asked the questions for more details](https://groups.google.com/g/jaaba/c/CV6UHQ43XKg)
+    - [click here for the JAABA Google Groups conversation where we asked the questions for more details](https://groups.google.com/g/jaaba/c/CV6UHQ43XKg)
 
 ## Next steps:
 1. Training classifiers for other behaviors other than Ins and Outs:
@@ -85,15 +98,17 @@ Read our DeepLabCut.md file for more details.
         - Label more frames for DeepLabCut to use for training. We are not confident that this will make a big difference since we already have so many frames labeled.
     - Reevaluate the way we are converting from DeepLabCut tracks to JAABA-compatible .mat file(trackConverterCSV.py). This was one of the toughest parts of this project. We encountered many strange errors when trying to make sure that every field in the final .mat file matched what JAABA was expecting. It's possible that we might have made mistakes / done things in a non-optimal way during the process. 
         For example, while we track the x and y coordinates of many body parts in DeepLabCut, JAABA only takes in a single x and y coordinate for each frame. So, we have to use all of the tracked body parts from DeepLabCut to approximate the center of the animal. Currently, for each frame we basically get all of the x-coordinates of all the body parts that are tracked(AKA not a NaN value) and average them. Perhaps there is a better way to approximate the center of the animal. This is an example of something that could be revisited.
-    - The quality of the videos are not great. With more HD video quality, we believe we can achieve much better results. This obviously will take a lot of work, as Sarah would have to install some new camera system and take videos of many experiments again.
+    - The quality of the videos are not great; With more HD video quality, we believe we can achieve much better results. This obviously will take a lot of work, as Sarah would have to install some new camera system and take videos of many experiments again.
 
 3. score_converter.py. 
-    - Main work here is to complete the get_results() function. This is template code for extracting information from the output from JAABA(AKA this should be definitely be changed).
+    - Main work here is to complete the get_results() function. This is template code(AKA this must be changed) for extracting information from the output from JAABA.
 
      - One of the outputs from JAABA is an array that is of length n, where n is the number of frames in the video, and each frame is either 0(behavior is not predicted to be occurring), 1(behavior is predicted to be occurring), or NaN. The template code I have right now for the get_results() function is an implementation of the following idea:
 
-    - Start tracking a potential bout of behavior whenever we encounter a frame where it is predicted to be occurring. Once we encounter a certain number of frames in a row(variable named max_none_frames), we see how long that bout of behavior was and if it's greater than min_bout_length, then we consider that as a valid instance of the behavior and then increment the counter variable(num_bouts) and record the frame where that bout started(frame_list. Also, eventually Sarah will want all the frames in frame_list to be recorded in seconds rather than frames, which you can get by dividing the frame by the FPS(frames per second) of the video, which I believe is 60.
+        - Start tracking a potential bout of behavior whenever we encounter a frame where it is predicted to be occurring. Once we encounter a certain number of frames in a row(variable named max_none_frames), we see how long that bout of behavior was and if it's greater than min_bout_length, then we consider that as a valid instance of the behavior and then increment the counter variable(num_bouts) and record the frame where that bout started(frame_list. Also, eventually Sarah will want all the frames in frame_list to be recorded in seconds rather than frames, which you can get by dividing the frame by the FPS(frames per second) of the video, which I believe is 60.
 
-    - You may have a better approach to extract the information we want from the JAABA output. This is just the best way we could think of.
+        - You may have a better approach to extract the information we want from the JAABA output. This is just the best way we could think of.
+        
+4. Investigate using custom target type. If you take a look at the "JAABA - Setup Instructions" Google doc, you'll see that there's a step called "Create custom target type for JAABA". We never implemented this step, instead choosing to use the default "flies" target type when training our classifiers. The person prior to us did create a file called "featureConfig_logan_rat.xml" that's supposed to be used for this purpose(found on the Meerts Lab google drive). We are not sure how it works and what everything inside it means. We suspect that using a custom target type might produce better results from JAABA, though we think the tracks from DeepLabCut is where our main issues lie.
 
 
