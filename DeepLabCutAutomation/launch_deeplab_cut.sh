@@ -1,3 +1,2 @@
-conda activate dlcTest
+conda activate DEEPLABCUT
 python -m deeplabcut
-conda deactivate

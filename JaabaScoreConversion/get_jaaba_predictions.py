@@ -1,5 +1,9 @@
 import matlab.engine, os
 
+# Run this function to convert the generated h5 files to csv's so we can work with them
+root = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
+os.chdir(root)
+
 def get_predictions(experiments_dir):
     eng = matlab.engine.start_matlab()
     # Add path to JAABA so that engine has access to JAABA functions
@@ -15,4 +19,4 @@ def get_predictions(experiments_dir):
         )
 
 if __name__ == "__main__":
-    get_predictions('/Users/neurostudent/Documents/MeertsLabMachineLearning/RatExperiment1/TrackConversion/ExperimentDirectory')
+    get_predictions('./JaabaExperiments')

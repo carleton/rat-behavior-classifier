@@ -1,3 +1,6 @@
 [submodule "DeepLabCut"]
 	path = DeepLabCut
 	url = https://github.com/AlexEMG/DeepLabCut.git
+[submodule "JAABA"]
+	path = JAABA
+	url = https://github.com/kristinbranson/JAABA.git

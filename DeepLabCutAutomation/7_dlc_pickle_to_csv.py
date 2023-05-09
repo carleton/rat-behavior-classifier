@@ -76,7 +76,7 @@ def pickle_to_csv(pickle_path):
                 pass
             writer.writerow(result)
 
-if os.getenv('pickles_generated'):
+if __name__ == "__main__":
     videos_folder_path = os.path.abspath('./Videos')
     for file in os.listdir(videos_folder_path):
         if file.endswith('_full.pickle'):

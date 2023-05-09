@@ -6,35 +6,46 @@ This is a project is that uses DeepLabCut and JAABA to classify animal behavior.
 ## Getting Ready
 We recommend installing [VS Code](https://code.visualstudio.com/download) and [git](https://git-scm.com/download) in order to clone the code and run it locally.
 
-You will need [Anaconda](https://www.anaconda.com/download/) to run DeepLabCut
+You will need [Anaconda](https://www.anaconda.com/download/) to run DeepLabCut and Matlab to run JAABA.
+
+### Submodule Setup
+To run DeepLabCut and JAABA we must download the source code. In a terminal, navigate to this project and run the following command:
+
+```console
+git submodule update --init
+```
+
+### DeepLabCut Setup
+<!--
+Is not working at the moment
 
 With the code downloaded and Anaconda installed, you will then have to open up the terminal and navigate to [DeepLabCut/conda-environments](./DeepLabCut/conda-environments) folder. If you open this project in VS Code and open a terminal you simply need to run the following commands.
 
-
-<!--
-Is not working at the moment
-git submodule update --init             # download the DeepLabCut code
 cd DeepLabCut/conda-environments        # navigate to the correct folder
 conda env create -f DEEPLABCUT.yaml     # install the DeepLabCut Anaconda environment (dependencies)
 -->
+
+With the code downloaded and Anaconda installed, you will then have to set up the conda environmet by running the following commands in the terminal.
 ```console
 conda create -n DEEPLABCUT python=3.10
 conda activate DEEPLABCUT
 conda install -y -q python-dotenv
 pip install "deeplabcut[tf,gui]"
-conda deactivate
 ```
 
 In the [rat-behavior-classifier folder](.), you must create a folder named Videos within which you place the video (.mp4) of each experiment you will be using to train the model.
 
 Before you begin you will need to open [DeepLabCutAutomation/1_create_project.pyw](./DeepLabCutAutomation/1_create_project.pyw) an adjust the ```PROJECT_NAME```, ```YOUR_NAME``` and ```edits``` to your specific project requirements.
 
-## DeepLabCut:
+### JAAAB Setup
+
+## What is DeepLabCut?
 
 DeepLabCut is a library that allows one to train deep neural networks to track the body parts of one or more animals by labeling a small number of frames. Read more about it here: http://www.mackenziemathislab.org/deeplabcut#:~:text=DeepLabCut%E2%84%A2%20is%20an%20efficient,typically%2050%2D200%20frames).
 
 Read our DeepLabCut.md file for more details.
-## JAABA
+
+## What is JAABA?
 
 - JAABA is a library that allows one to train animal behavior classifiers by giving it tracks of animal body parts(obtained through DeepLabCut in our case) and labeling a small number of the behavior occurring within a video. The official description is below:
 

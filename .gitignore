@@ -1,6 +1,8 @@
 *
 !.gitignore
 !.gitmodules
+!DeepLabCut
+!JAABA
 !DeepLabCutAutomation/
 !DeepLabCutAutomation/*
 !JaabaScoreConversion/
@@ -13,3 +15,4 @@
 !Scoring/
 !Scoring/*
 */.DS_Store
+*/__pycache__
