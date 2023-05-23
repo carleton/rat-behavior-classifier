@@ -38,6 +38,9 @@ In the [rat-behavior-classifier folder](.), you must create a folder named Video
 Before you begin you will need to open [DeepLabCutAutomation/1_create_project.pyw](./DeepLabCutAutomation/1_create_project.pyw) an adjust the ```PROJECT_NAME```, ```YOUR_NAME``` and ```edits``` to your specific project requirements.
 
 ### JAAAB Setup
+JAABA requires the JAABA code (see [Submodule Setup](#submodule-setup)) and MatLab to be installed as well as the MatLab toolboxes:
+- Parallel Computing Toolbox
+- Image Processing Toolbox
 
 ## What is DeepLabCut?
 
