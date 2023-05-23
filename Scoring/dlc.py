@@ -6,7 +6,7 @@ root = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
 os.chdir(root)
 
 sys.path.append('./DeepLabCutAutomation')
-import 7_dlc_pickle_to_csv as ptc
+ptc = __import__('7_dlc_pickle_to_csv')
 
 def get_positions(video_folder, output_dir):
     CONFIG_PATH = None
@@ -19,4 +19,4 @@ def get_positions(video_folder, output_dir):
 
     for file in os.listdir(video_folder):
         if file.endswith('_full.pickle'):
-            ptc.pickle_to_csv(os.path.join(video_folder, file))
+            ptc.pickle_to_csv(os.path.join(video_folder, file), output_dir)

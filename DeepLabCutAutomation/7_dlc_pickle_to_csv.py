@@ -38,7 +38,11 @@ def _flatten_detections(data_dict):
             ind += 1
             yield joint
 
-def pickle_to_csv(pickle_path):
+def pickle_to_csv(pickle_path, output_folder):
+    if output_folder is not None:
+        output_path = os.path.join(output_folder, os.path.basename(pickle_path))
+    else:
+        output_path = pickle_path
     with open(pickle_path, "rb") as handle:
         pickle_data = pickle.load(handle)
 
@@ -53,7 +57,7 @@ def pickle_to_csv(pickle_path):
     frame_names = list(data)
     frames = [int(re.findall(r"\d+", name)[0]) for name in frame_names]
 
-    with open(pickle_path.replace("_full.pickle", ".csv"), "w", encoding="utf-8", newline="") as out:
+    with open(output_path.replace("_full.pickle", ".csv"), "w", encoding="utf-8", newline="") as out:
         writer = csv.writer(out)
         for n in range(max(frames)):
             result = [""]*len_result
