@@ -60,7 +60,7 @@ Read our DeepLabCut.md file for more details.
 ## Code Breakdown
 
 - ### DeepLabCutAutomationTemplate
-    - We have created 7 Python files, that when run in order, automates the DeepLabCut component of this project. They are found in the DeepLabCutAutomation folder. The files that don't start with a number are optional and are used for diagnostic purposes.
+    - We have created 7 Python files, that when run in order, automates the DeepLabCut component of this project. They are found in the DeepLabCutAutomation folder. The files that don't start with a number are optional and are used for diagnostic purposes. At the moment, 2_ and 3_ are not working so we suggest you use launch_deeplab_cut.sh to launch the DLC graphical user interface and complete those steps that way.
 
 - ### JaabaScoreConversion
     - get_jaaba_predictions.py: this is a file where you can specify a JAABA experiment directory, and after running, will automatically get the predictions for behaviors specified in jab_list.txt on all the videos in the experiment directory.
@@ -70,6 +70,12 @@ Read our DeepLabCut.md file for more details.
     - dlcToExperiment.py: This is a file you use when you want to create a new JAABA experiment. You can specify the list of behaviors that you want to train classifiers for; running this file will automatically copy over the videos and .csv tracks from the DeepLabCut folder, create several copies of these videos and tracks(one for each behavior), and also populate each of those behavior folders with the CONVERTED tracks as well(tracks from DeepLabCut converted into JAABA compatible format using trackConverterCSV.py).
     - template_trx.mat: This is a file that we use during the track conversion process. Not super clear on what it contains, all we know is that it was used in the code that was given to us to convert the tracks so we're keeping it.
     - trackConverterCSV.py: This is the file that contains the function(csv_to_mat()) that actually converts DeepLabCut tracks to JAABA.
+- ### Scoring
+    - The scoring folder is used to run the entire workflow once the DLC and JAABA models are created and trained.
+    - workflow.py is the combined workflow, running it, it will prompt you for a folder of videos to predict as well as a folder containing the .jab behavior classifiers to run.
+    - dlc.py computes the position of the animal body parts in each video and outputs a CSV
+    - dlc_to_jaaba.py converts the csvs to JAABA compatible experiments
+    - jaaba.py applies the .jab classifiers to the experiments and outputs the results
 
 ## Workflow:
 This is an outline of the workflow of this project, and it's assuming that you're starting from complete scratch. Note that if you are not starting from scratch, this is just a general order of things must be done, so you don't need to repeat every step of the process everytime you want to get prediction for JAABA, for example.
