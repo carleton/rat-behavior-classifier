@@ -3,6 +3,10 @@
 ## Introduction
 This is a project is that uses DeepLabCut and JAABA to classify animal behavior. The idea is that we use DeepLabCut as a non-invasive multi-part tracker to get the tracks of the animals and then we feed those tracks into JAABA to train behavior classifiers that will then be able to predict bouts of animal behavior on new videos.
 
+DeepLabCut documentation: https://deeplabcut.github.io/DeepLabCut/README.html
+
+JAABA documentation: https://jaaba.sourceforge.net/
+
 ## Getting Ready
 We recommend installing [VS Code](https://code.visualstudio.com/download) and [git](https://git-scm.com/download) in order to clone the code and run it locally.
 
@@ -82,14 +86,16 @@ This is an outline of the workflow of this project, and it's assuming that you'r
 
 1. DeepLabCut
     1. Use [DeepLabCutAutomation/1_create_project.py](./DeepLabCutAutomation/1_create_project.py)  to create a new DLC project. 
-    2. Use [DeepLabCutAutomation/launch_deeplab_cut.sh](./DeepLabCutAutomation/launch_deeplab_cut.sh) to launch the GUI to complete the rest of the process(extracting frames, labeling frames, creating training set, training, generating pickles, converting from pickle to CSV)
+    2. Use [DeepLabCutAutomation/launch_deeplab_cut.sh](./DeepLabCutAutomation/launch_deeplab_cut.sh) to launch the GUI to complete the following: extracting frames, labeling frames, creating training set, training)
+    3. Use the files starting with "6" and "7" to generate pickles for all videos in the "Videos" folder and convert them from pickle to CSV.
 2. JAABA
-    1. Use [TrackConverter/dlcToExperiment.py](./TrackConverter/dlcToExperiment.py)  when you want to create a new JAABA experiment.
+    1. Use [TrackConverter/dlcToExperiment.py](./TrackConverter/dlcToExperiment.py)  when you want to create a new JAABA experiment. This file uses the "Videos" folder we already have to make and populate a bunch of folders to satisfy the way the JAABA wants the files to be.
         - Note that this is where our [TrackConverter/trackConverterCSV.py](./TrackConverter/trackConverterCSV.py) file is used.
-    2. Train classifier(s). 
-    3. Specify behaviors you want to get predictions for in [JaabaScoreConversion/jab_list.txt](./JaabaScoreConversion/jab_list.txt)
-    4. Use [JaabaScoreConversion/get_jaaba_predictions.py](./JaabaScoreConversion/get_jaaba_predictions.py) to get the predictions for behaviors specified in jab_list.txt on all the videos in the experiment directory.
-    5. (future) use [JaabaScoreConversion/score_converter.py](./JaabaScoreConversion/score_converter.py) to convert the JAABA predictions into a format Sarah wants(AKA the way ChamberMate produces results)
+    2. Start the JAABA GUI by opening Matlab, navigating to "Users/neurostudent/Documents/MeertsLabMachineLearning/JAABA/perframe", and typing "StartJAABA" in the Command Window.
+    3. Train classifier(s): https://www.youtube.com/watch?v=6hdyVwNKepQ&t=35s
+    4. Specify behaviors you want to get predictions for in [JaabaScoreConversion/jab_list.txt](./JaabaScoreConversion/jab_list.txt)
+    5. Use [JaabaScoreConversion/get_jaaba_predictions.py](./JaabaScoreConversion/get_jaaba_predictions.py) to get the predictions for behaviors specified in jab_list.txt on all the videos in the experiment directory.
+    6. (future) use [JaabaScoreConversion/score_converter.py](./JaabaScoreConversion/score_converter.py) to convert the JAABA predictions into a format Sarah wants(AKA the way ChamberMate produces results)
 ## Problems We've Encountered(and figured out): 
 - In the process of converting DeepLabCut tracks into a .mat file in JAABA:
     - The dt property has to be an array of nframes-1 values where each value must be the same.

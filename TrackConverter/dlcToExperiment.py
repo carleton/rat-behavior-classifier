@@ -1,8 +1,6 @@
 import os, shutil
 from trackConverterCSV import csv_to_mat
 
-## TODO Change from using first behavior to making a a generic ExperimentDirectory folder which can be copied from if needed
-
 # Run this function to convert the generated h5 files to csv's so we can work with them
 root = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..")
 os.chdir(root)

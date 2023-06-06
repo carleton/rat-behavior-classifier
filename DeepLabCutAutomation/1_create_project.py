@@ -1,6 +1,6 @@
 # based off of: 
 # https://github.com/DeepLabCut/DeepLabCut/blob/master/docs/maDLC_UserGuide.md#optimized-animal-assembly--video-analysis
-# We are assuming that the code will be run in an experimentl directory of the following structure
+# We are assuming that the code will be run in an experiment directory of the following structure
 # ExperimentName (Folder)
 #       |
 #       ----   Videos (Folder)
