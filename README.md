@@ -89,7 +89,7 @@ This is an outline of the workflow of this project, and it's assuming that you'r
     2. Use [DeepLabCutAutomation/launch_deeplab_cut.sh](./DeepLabCutAutomation/launch_deeplab_cut.sh) to launch the GUI to complete the following: extracting frames, labeling frames, creating training set, training)
     3. Use the files starting with "6" and "7" to generate pickles for all videos in the "Videos" folder and convert them from pickle to CSV.
 2. JAABA
-    1. Use [TrackConverter/dlcToExperiment.py](./TrackConverter/dlcToExperiment.py)  when you want to create a new JAABA experiment. This file uses the "Videos" folder we already have to make and populate a bunch of folders to satisfy the way the JAABA wants the files to be.
+    1. Use [TrackConverter/dlcToExperiment.py](./TrackConverter/dlcToExperiment.py)  when you want to create a new JAABA experiment. This file uses the "Videos" folder we already have to make and populate a bunch of folders to satisfy the way the JAABA wants the files to be. !!! Problem Here !!!
         - Note that this is where our [TrackConverter/trackConverterCSV.py](./TrackConverter/trackConverterCSV.py) file is used.
     2. Start the JAABA GUI by opening Matlab, navigating to "Users/neurostudent/Documents/MeertsLabMachineLearning/JAABA/perframe", and typing "StartJAABA" in the Command Window.
     3. Train classifier(s): https://www.youtube.com/watch?v=6hdyVwNKepQ&t=35s
