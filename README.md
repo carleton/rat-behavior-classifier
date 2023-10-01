@@ -86,7 +86,7 @@ This is an outline of the workflow of this project, and it's assuming that you'r
 
 1. DeepLabCut
     1. Use [DeepLabCutAutomation/1_create_project.py](./DeepLabCutAutomation/1_create_project.py)  to create a new DLC project. 
-    2. Use [DeepLabCutAutomation/launch_deeplab_cut.sh](./DeepLabCutAutomation/launch_deeplab_cut.sh) to launch the GUI to complete the following: extracting frames, labeling frames, creating training set, training). In Windows, run '''python -m deeplabcut'''
+    2. Use [DeepLabCutAutomation/launch_deeplab_cut.sh](./DeepLabCutAutomation/launch_deeplab_cut.sh) to launch the GUI to complete the following: extracting frames, labeling frames, creating training set, training). In Windows, run ```python -m deeplabcut```
     3. Use the files starting with "6" and "7" to generate pickles for all videos in the "Videos" folder and convert them from pickle to CSV.
 2. JAABA
     1. Use [TrackConverter/dlcToExperiment.py](./TrackConverter/dlcToExperiment.py)  when you want to create a new JAABA experiment. This file uses the "Videos" folder we already have to make and populate a bunch of folders to satisfy the way the JAABA wants the files to be. !!! Problem Here !!!
